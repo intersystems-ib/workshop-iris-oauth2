@@ -1,0 +1,16 @@
+    // unexpire passwords for dev mode
+    zn "%SYS"
+    do ##class(Security.Users).UnExpireUserPasswords("*")
+    
+    do $SYSTEM.OBJ.Load("/opt/irisapp/src/client/Installer.cls", "ck") 
+
+    // setup environment
+    do ##class(client.Installer).SetupEnvironment(.vars)
+
+    // setup CLIENT namespace
+    do ##class(client.Installer).SetupCLIENT()
+
+    // webgateway: access using server name
+    do $System.CSP.SetConfig("CSPConfigName","client")
+
+    halt

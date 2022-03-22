@@ -1,0 +1,61 @@
+version: '3.7'
+
+services:
+  
+  client:
+    init: true
+    hostname: client
+    build:
+      context: oauth-client
+    image: workshop-iris-oauth:client
+    container_name: client
+    ports:
+    - "9091:52773"
+    - "8081:1972"
+    volumes:
+    - .:/app
+
+  resserver:
+    init: true
+    hostname: resserver
+    build:
+      context: oauth-resource-server
+    image: workshop-iris-oauth:resserver
+    container_name: resourceserver
+    ports:
+    - "9092:52773"
+    - "8082:1972"
+    volumes:
+    - .:/app
+
+  authserver:
+    init: true
+    hostname: authserver
+    build:
+      context: oauth-auth-server
+      dockerfile: Dockerfile
+    image: workshop-iris-oauth:authserver
+    container_name: authserver
+    ports:
+    - "9093:52773"
+    - "8083:1972"
+    volumes:
+    - .:/app
+
+  webserver:
+    hostname: webserver
+    build:
+      context: webserver
+      dockerfile: Dockerfile
+    image: workshop-iris-oauth:webserver
+    container_name: webserver
+    init: true
+    depends_on:
+      - authserver
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./webserver:/webserver
+    environment:
+    - ISC_DATA_DIRECTORY=/webserver

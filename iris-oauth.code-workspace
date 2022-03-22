@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "main",
+			"path": "."
+		},
+		{
+			"name": "client",
+			"path": "oauth-client"
+		},
+		{
+			"name": "resserver",
+			"path": "oauth-resource-server"
+		},
+		{
+			"name": "authserver",
+			"path": "oauth-auth-server"
+		},
+	],
+}
