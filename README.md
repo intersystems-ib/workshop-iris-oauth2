@@ -62,7 +62,7 @@ Create a dynamic OAuth server definition:
 * Issuer endpoint: `https://webserver/authserver/oauth2`
 * SSL/TLS configuration: `ssl`
 
-Create a OAuth client definition:
+Create an OAuth client definition:
 * Application name: `client-app`
 * Client name: `client-name`
 * Client type: `Confidential`
@@ -72,5 +72,19 @@ Create a OAuth client definition:
   * Hostname: `webserver`
   * Prefix: `client`
 
-
 https://webserver/client/application/
+
+# Resource Server
+In [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp):
+
+Create a dynamic OAuth server definition:
+* Go to *System Administration > Security > OAuth 2.0 > Client > Client Configurations > Create Client Configuration*
+* Issuer endpoint: `https://webserver/authserver/oauth2`
+* SSL/TLS configuration: `ssl`
+
+Create an OAuth client definiton:
+* Application name: `resserver`
+* Client type: `Resource Server`
+* SSL/TLS configuration: `ssl`
+
+https://webserver/resserver/protected-resources/

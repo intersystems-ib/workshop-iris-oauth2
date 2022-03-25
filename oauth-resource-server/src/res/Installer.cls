@@ -11,13 +11,16 @@ XData Setup [ XMLNamespace = INSTALLER ]
             <Database Name="RESSERVER-CODE" Dir="/usr/irissys/mgr/resserver-code" Create="yes" MountRequired="true" Resource="%DB_DEFAULT" PublicPermissions="RW" MountAtStartup="true"/> 
         </Configuration>
     </Namespace>
-     <!--
-     <Namespace Name="%SYS" Create="no">
-        <Invoke Class="Security.Applications" Method="Import" CheckStatus="true">
-            <Arg Value="/opt/irisapp/install/webapp.xml"/>
+    <Namespace Name="%SYS" Create="no">
+        <Invoke Class="Security.SSLConfigs" Method="Import" CheckStatus="true">
+            <Arg Value="/opt/irisapp/install/ssl.xml"/>
         </Invoke>
     </Namespace>
-    -->
+    <Namespace Name="%SYS" Create="no">
+        <Invoke Class="Security.Applications" Method="Import" CheckStatus="true">
+            <Arg Value="/opt/irisapp/install/webapp-protected-resources.xml"/>
+        </Invoke>
+    </Namespace>
 </Manifest>
 }
 

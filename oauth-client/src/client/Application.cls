@@ -35,6 +35,8 @@ ClassMethod ClientApp() As %Status
 		quit $$$OK
 	}
 
+	&html< <h1>Authorization</h1> >
+
 	// authorized
     if isAuthorized {
 
@@ -80,6 +82,28 @@ ClassMethod ClientApp() As %Status
 			&html<
 				<h4>Introspection</h4>
 				<pre>#(introspection)#</pre>
+			>
+
+			// access protected resources from resource server
+			set httpRequest = ##class(%Net.HttpRequest).%New()
+			set httpRequest.Server = "webserver"
+			set httpRequest.Https = 1
+			set httpRequest.SSLConfiguration = "ssl"
+
+			set addTokenStatus = ##class(%SYS.OAuth2.AccessToken).AddAccessToken(httpRequest, "header", "ssl", ..#OAUTH2APPNAME)
+			if $$$ISERR(addTokenStatus) {
+				write "[Error] AddAccessToken: "_$system.Status.GetOneErrorText(addTokenStatus)
+				quit $$$OK
+			}
+
+			do httpRequest.Get("/resserver/protected-resources/")
+			set response = httpRequest.HttpResponse
+			&html<
+				<h1>Access to resource server</h1>
+				Using token provided by authorization server to access https://webserver/resserver/protected-resources/ ...
+				<h4>Response</h4>
+				<pre>#(httpRequest.HttpResponse.StatusCode)#</pre>
+				<pre>#(httpRequest.HttpResponse.Data.Read())#</pre> 
 			>
 
 		}
