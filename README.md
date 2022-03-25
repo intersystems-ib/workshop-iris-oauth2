@@ -55,9 +55,22 @@ do ##class(auth.server.Utils).CreateServerConfig()
 * The OpenID URL for the server is available at: https://webserver/authserver/oauth2/.well-known/openid-configuration
 
 # Client
-In [Client](https://webserver/client/csp/sys/UtilHome.csp), create a new client definition:
+In [Client](https://webserver/client/csp/sys/UtilHome.csp):
 
-* Go to *System Administration > Security > OAuth 2.0 > Client > Create Server Description*
+Create a dynamic OAuth server definition:
+* Go to *System Administration > Security > OAuth 2.0 > Client > Client Configurations > Create Client Configuration*
 * Issuer endpoint: `https://webserver/authserver/oauth2`
 * SSL/TLS configuration: `ssl`
 
+Create a OAuth client definition:
+* Application name: `client-app`
+* Client name: `client-name`
+* Client type: `Confidential`
+* SSL/TLS configuration: `ssl`
+* Client redirect URL:
+  * Use TLS: `yes`
+  * Hostname: `webserver`
+  * Prefix: `client`
+
+
+https://webserver/client/application/

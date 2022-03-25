@@ -24,7 +24,11 @@ ClassMethod CreateServerConfig() As %Status
     set server.ValidateUserClass = "auth.server.Validate"
     set server.CustomizationNamespace = "AUTHSERVER"
     set server.CustomizationRoles = "%DB_IRISSYS,%Manager,%DB_%DEFAULT"
+    set server.SSLConfiguration = "ssl"
 
+    // use JWT tokens
+    set server.GenerateTokenClass = "%OAuth2.Server.JWT"
+    
     write server.Save()
 
     set $namespace = ns

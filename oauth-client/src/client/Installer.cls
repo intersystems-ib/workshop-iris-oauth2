@@ -16,13 +16,11 @@ XData Setup [ XMLNamespace = INSTALLER ]
             <Arg Value="/opt/irisapp/install/ssl.xml"/>
         </Invoke>
     </Namespace>
-    <!--
      <Namespace Name="%SYS" Create="no">
         <Invoke Class="Security.Applications" Method="Import" CheckStatus="true">
-            <Arg Value="/opt/irisapp/install/webapp-ingestion-api.xml"/>
+            <Arg Value="/opt/irisapp/install/webapp-application.xml"/>
         </Invoke>
     </Namespace>
-    -->
 </Manifest>
 }
 
