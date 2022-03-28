@@ -16,6 +16,7 @@ ClassMethod ValidateUser(username As %String, password As %String, scope As %Arr
 {
 	set $namespace = "%SYS"
     set ret = ##super(username, password, scope, properties, .sc)
+
     set $namespace = "AUTHSERVER"
     quit ret
 }

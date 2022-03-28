@@ -20,7 +20,7 @@ ClassMethod CreateServerConfig() As %Status
     set server.SupportedGrantTypes = "AP"
 
     set scopes = ##class(%ArrayOfDataTypes).%New()
-    do scopes.SetAt("test/*", "scope1")
+    do scopes.SetAt("My own scope", "my/scope")
     set server.SupportedScopes = scopes
 
     set server.AuthenticateClass = "auth.server.Authenticate"

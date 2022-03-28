@@ -3,7 +3,7 @@ Class res.Server Extends %CSP.REST
 
 Parameter OAUTH2APPNAME = "resserver";
 
-Parameter OAUTH2SCOPES = "scope1";
+Parameter OAUTH2SCOPES = "openid profile email my/scope";
 
 Parameter UseSession As Integer = 1;
 

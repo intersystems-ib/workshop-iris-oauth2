@@ -5,7 +5,7 @@ Parameter OAUTH2APPNAME = "client-app";
 
 Parameter OAUTH2CLIENTREDIRECTURI = "https://webserver/client/application/";
 
-Parameter OAUTH2SCOPES = "scope1";
+Parameter OAUTH2SCOPES = "openid profile email my/scope";
 
 Parameter UseSession As Integer = 1;
 
@@ -65,7 +65,9 @@ ClassMethod ClientApp() As %Status
 			
 			&html< 
 				Your JWT token is valid </br>
-				<h4>JWT Token</h2>
+				<h4>Access Token</h4>
+				<pre>#(accessToken)#</pre>
+				<h4>JWT</h4>
 				<h5>Header</h5>
 				<pre>#(header)#</pre>
 				<h5>Payload</h5>
@@ -82,6 +84,30 @@ ClassMethod ClientApp() As %Status
 			&html<
 				<h4>Introspection</h4>
 				<pre>#(introspection)#</pre>
+			>
+
+			// validate IDToken
+			set valid = ##class(%SYS.OAuth2.Validation).ValidateIDToken(..#OAUTH2APPNAME, idToken, accessToken, ..#OAUTH2SCOPES, "" /*aud*/, .idTokenObj, .secParam, .sc) 
+			if $$$ISERR(sc) {
+				write "[Error] ValidateIDToken: "_$system.Status.GetOneErrorText(sc)
+				quit $$$OK
+			}
+
+			// get user info
+			set sc = ##class(%SYS.OAuth2.AccessToken).GetUserinfo(..#OAUTH2APPNAME, accessToken, "", .userInfoObj, .secParam)
+			if $$$ISERR(introspectionStatus) {
+				write "[Error] GetUserinfo: "_$system.Status.GetOneErrorText(sc)
+				quit $$$OK
+			}
+
+			do formatter.FormatToString(idTokenObj.%ToJSON(), .idTokenObjFormatted)
+			do formatter.FormatToString(userInfoObj.%ToJSON(), .userInfoObjFormatted)
+			&html<
+				<h4>IDToken</h4>
+				<pre>#(idToken)#</pre>
+				<pre>#(idTokenObjFormatted)#</pre>
+				<h4>UserInfo</h4>
+				<pre>#(userInfoObjFormatted)#</pre>
 			>
 
 			// access protected resources from resource server
