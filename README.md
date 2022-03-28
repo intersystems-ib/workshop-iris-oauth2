@@ -56,9 +56,7 @@ After running containers, you should get access to:
 * Authorization server — A server that is responsible for issuing access tokens, with which the client can access the resource server. This server can be the same application as the authorization server but can also be a different application.
 
 ## Grant types and flows
-Aa grant type specifies how the authorization server should process the request for authorization. The client specifies the grant type within the initial request to the authorization server.
-
-In this examples, we will use two grant types: Authorization Code and Resource owner password credentials.
+A grant type specifies how the authorization server should process the request for authorization. The client specifies the grant type within the initial request to the authorization server.
 
 You can find more information in the [documentation](https://docs.intersystems.com/iris20212/csp/docbook/Doc.View.cls?KEY=GOAUTH_background).
 
