@@ -13,7 +13,7 @@ You can find your hosts file in:
 | MacOS | `/private/etc/hosts` |
 | Windows | `c:\Windows\System32\Drivers\etc\hosts` |
 
-## Certificate
+## Certificate
 * There is already a self-signed certificate generated in webserver/ssl-cert.pem, webserver/ssl-cert.key.
 * You can use this certificate for test purposes.
 * You will need to allow this certificate when navigating using a Web Browser (Safari, Chrome, etc.)
@@ -23,7 +23,7 @@ The certificate has been generated using:
 openssl req -x509 -newkey rsa:4096 -keyout ssl-cert.key -out ssl-cert.pem -nodes -sha256 -days 999 -subj "/CN=webserver"
 ```
 
-# Run
+# Run
 Build images:
 ```
 docker-compose build
