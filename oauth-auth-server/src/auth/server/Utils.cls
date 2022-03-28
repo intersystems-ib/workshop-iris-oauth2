@@ -16,6 +16,9 @@ ClassMethod CreateServerConfig() As %Status
     set endpoint.Prefix = "authserver"
     set server.IssuerEndpoint = endpoint
     
+    // support: Authorization Code + Resource Owner Password Credentials
+    set server.SupportedGrantTypes = "AP"
+
     set scopes = ##class(%ArrayOfDataTypes).%New()
     do scopes.SetAt("test/*", "scope1")
     set server.SupportedScopes = scopes
