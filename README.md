@@ -60,6 +60,29 @@ A grant type specifies how the authorization server should process the request f
 
 You can find more information in the [documentation](https://docs.intersystems.com/iris20212/csp/docbook/Doc.View.cls?KEY=GOAUTH_background).
 
+## Scopes
+Scopes are a mechanism in OAuth 2.0 to limit access. 
+
+A client can request one or more scopes, this information is displayed to the user in the consent screen. Finally, the access token issued to the application will be limited to the scopes granted.
+
+## OAuth and OpenID Connect
+**Authentication** is the process of verifying that users are who they says they are. 
+
+**Authorization** is the process of giving those users permission to access resources.
+
+OAuth is an authorization framework. OAuth specifies `access tokens`, used when an app has been authorized.
+
+OpenID Connect (OIDC) is extension to OAuth 2.0 to handle authentication. To request authentication, the client includes the `openid` scope value in the request to the authorization server. 
+
+OIDC specifies `IDTokens`, used when a user has been authenticated.
+
+There are some OIDC specific scopes:
+| Scope     | Description                                                                           |    
+| --------- | ---------                                                                             | 
+| openid    | Returns sub (uniquely identifies the user), iss, aud, exp, iat, and at_hash claims    |
+| profile   | Profile information like including name, family_name, given_name                      |
+| email     | email claim                                                                           |  
+
 # (a) Authorization Code Example
 
 <img src="img/authorization-code.png" width="500px"/>
@@ -82,6 +105,11 @@ do ##class(auth.server.Utils).CreateServerConfig()
 ```
 
 * Have a look at the OAuth Server definition in *System Administration > Security > OAuth 2.0 > Server*
+* Pay attention to:
+  * *Supported grant types*
+  * *Scopes*
+  * *JWT Settings*: how to sing and encrypt access token (JSON Web Token - JWT) 
+  * *Customization*: [auth.server.Authenticate](oauth-auth-server/src/auth/server/Authenticate.cls), [auth.server.Validate](src/auth/server/Validate.cls) in `AUTHSERVER` namespace contains some customizations you can include in your authorization server. You can also customize the login and consent page.
 * After defining the server, a new `/oauth2` web application has been created.
 * The OpenID URL for the server is available at: https://webserver/authserver/oauth2/.well-known/openid-configuration
 
@@ -128,3 +156,8 @@ Create an OAuth client definiton. This client definition represents the resource
 * Check [res.Server](oauth-resource-server/src/res/Server.cls) source code.
 * Resource server can be accessed only through the client application (otherwise it will return an error). 
 * The protected resource URL is: https://webserver/resserver/protected-resources/
+
+
+TODO:
+* Customize Login Page
+* Add developer user
