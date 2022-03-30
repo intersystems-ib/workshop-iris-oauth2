@@ -66,7 +66,7 @@ Scopes are a mechanism in OAuth 2.0 to limit access.
 A client can request one or more scopes, this information is displayed to the user in the consent screen. Finally, the access token issued to the application will be limited to the scopes granted.
 
 ## OAuth and OpenID Connect
-**Authentication** is the process of verifying that users are who they says they are. 
+**Authentication** is the process of verifying that users are who they say they are. 
 
 **Authorization** is the process of giving those users permission to access resources.
 
