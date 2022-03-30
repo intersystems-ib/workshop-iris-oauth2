@@ -55,12 +55,12 @@ After running containers, you should get access to:
 * Client — An application that requests limited access to a resource server. This can be a client-server application or can be an application that has no server (such as a JavaScript application or mobile application).
 * Authorization server — A server that is responsible for issuing access tokens, with which the client can access the resource server. This server can be the same application as the authorization server but can also be a different application.
 
-## Grant types and flows
+## Grant types and flows
 A grant type specifies how the authorization server should process the request for authorization. The client specifies the grant type within the initial request to the authorization server.
 
 You can find more information in the [documentation](https://docs.intersystems.com/iris20212/csp/docbook/Doc.View.cls?KEY=GOAUTH_background).
 
-## Scopes
+## Scopes
 Scopes are a mechanism in OAuth 2.0 to limit access. 
 
 A client can request one or more scopes, this information is displayed to the user in the consent screen. Finally, the access token issued to the application will be limited to the scopes granted.
