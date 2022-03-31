@@ -49,6 +49,8 @@ After running containers, you should get access to:
 | resserver  | https://webserver/resserver/csp/sys/UtilHome.csp   | IRIS instance that will act as Resource Server       |
 | client     | https://webserver/client/csp/sys/UtilHome.csp      | IRIS instance that will act as Client                |
 
+You can login in InterSystems IRIS instances using `superuser`/`SYS`.
+
 ## Roles
 * Resource owner — Usually a user.
 * Resource server — A server that hosts protected data and/or services.
@@ -104,14 +106,32 @@ zn "AUTHSERVER"
 do ##class(auth.server.Utils).CreateServerConfig()
 ```
 
-* Have a look at the OAuth Server definition in *System Administration > Security > OAuth 2.0 > Server*
-* Pay attention to:
-  * *Supported grant types*
-  * *Scopes*
-  * *JWT Settings*: how to sing and encrypt access token (JSON Web Token - JWT) 
-  * *Customization*: [auth.server.Authenticate](oauth-auth-server/src/auth/server/Authenticate.cls), [auth.server.Validate](src/auth/server/Validate.cls) in `AUTHSERVER` namespace contains some customizations you can include in your authorization server. You can also customize the login and consent page.
-* After defining the server, a new `/oauth2` web application has been created.
-* The OpenID URL for the server is available at: https://webserver/authserver/oauth2/.well-known/openid-configuration
+Have a look at the OAuth Server definition in *System Administration > Security > OAuth 2.0 > Server* and check:
+
+### Supported grant types
+* These are the grant types that your auth server will support.
+* There are different grant types suitable for different scenarios. In this case we are using *authorization code*.
+
+### Scopes
+* A client can request one or more scopes. This information is displayed to the user in the consent screen.
+* You can define your own scopes.
+* Your auth server will also support OIDC scopes.
+
+### JWT Settings
+* Algorithms used to sign and encrypt access token (JSON Web Token - JWT).
+
+### Customization
+* You can customize the behaviour of your auth server.
+* In this case, customizations will be done in `AUTHSERVER` namespace.
+* [auth.server.Authenticate](oauth-auth-server/src/auth/server/Authenticate.cls) can customize different methods like:
+  * `BeforeAuthenticate`, `AfterAuthenticate`
+  * `DisplayLogin` - customize login page that will be presented to users when authenticating
+  * `DisplayPermissions` - customize consent page that will presented to users when consenting scopes
+* [auth.server.Validate](src/auth/server/Validate.cls) also can customize methods like:
+  * `ValidateUser` - this is actually how users are authenticated in the system. By default it authenticates based on users created on the InterSystems IRIS instance. However you can write any other behaviour you need.  
+
+After defining the server, a new `/oauth2` web application has been created.
+The OpenID URL for the server is available at: https://webserver/authserver/oauth2/.well-known/openid-configuration
 
 ## (a.2) Client
 Now, you will create client definition in the [Client](https://webserver/client/csp/sys/UtilHome.csp) instance.
@@ -150,6 +170,8 @@ Create an OAuth client definiton. This client definition represents the resource
 * In the [Client](https://webserver/client/csp/sys/UtilHome.csp) instance you have already a simple web app created that uses the `%OAuth2` classes.
 * Have a look at the code of [client.Application](oauth-client/src/client/Application.cls)
 * Test the application using https://webserver/client/application/
+  * Try accessing with `superuser`/`SYS` or `developer`/`test`. 
+  * Notice that these users are actually defined in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp) instance.
 
 ### Resource Server
 * In the [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp) instance, you also have the resource server prepared.
@@ -157,7 +179,3 @@ Create an OAuth client definiton. This client definition represents the resource
 * Resource server can be accessed only through the client application (otherwise it will return an error). 
 * The protected resource URL is: https://webserver/resserver/protected-resources/
 
-
-TODO:
-* Customize Login Page
-* Add developer user
