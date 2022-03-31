@@ -117,10 +117,10 @@ Have a look at the OAuth Server definition in *System Administration > Security 
 * You can define your own scopes.
 * Your auth server will also support OIDC scopes.
 
-### JWT Settings
+### JWT Settings
 * Algorithms used to sign and encrypt access token (JSON Web Token - JWT).
 
-### Customization
+### Customization
 * You can customize the behaviour of your auth server.
 * In this case, customizations will be done in `AUTHSERVER` namespace.
 * [auth.server.Authenticate](oauth-auth-server/src/auth/server/Authenticate.cls) can customize different methods like:
