@@ -179,3 +179,6 @@ Create an OAuth client definiton. This client definition represents the resource
 * Resource server can be accessed only through the client application (otherwise it will return an error). 
 * The protected resource URL is: https://webserver/resserver/protected-resources/
 
+You should get something like that:
+<img src="img/oauth-client-webapp.gif" width="800px"/>
+
