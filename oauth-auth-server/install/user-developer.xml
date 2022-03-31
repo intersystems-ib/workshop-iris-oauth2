@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersExport>
+  <Users>
+    <AccountNeverExpires>false</AccountNeverExpires>
+    <AutheEnabled>0</AutheEnabled>
+    <ChangePassword>false</ChangePassword>
+    <Comment>A great developer!</Comment>
+    <CreateDateTime>66199,36332.5398437</CreateDateTime>
+    <CreateUsername>SuperUser</CreateUsername>
+    <EmailAddress>miguel.cervantes@quiijote.es</EmailAddress>
+    <Enabled>true</Enabled>
+    <ExpirationDate>1840-12-31</ExpirationDate>
+    <Flags>1</Flags>
+    <FullName>Miguel de Cervantes Saavedra</FullName>
+    <HOTPKey>ar3l6iF8fKcSvrrqTBorp/ZLR4Y=</HOTPKey>
+    <HOTPKeyGenerate>false</HOTPKeyGenerate>
+    <HOTPKeyDisplay>false</HOTPKeyDisplay>
+    <LastModifiedDateTime>66199,36353.4255386</LastModifiedDateTime>
+    <LastModifiedInfo>
+Roles modified:
+  New value: %All
+  Old value: 
+</LastModifiedInfo>
+    <LastModifiedUsername>SuperUser</LastModifiedUsername>
+    <Name>developer</Name>
+    <Password>fO59FSyojB5eMXfXQOqYJKhTPHtzJwp0ZL9ZZqovU2kEgJs2POJ2Hhgheijk3pn1ILmnUvBZ31rBHI28sSBxCQ==</Password>
+    <PasswordNeverExpires>true</PasswordNeverExpires>
+    <PasswordChangedDateTime>66199,36342.682636</PasswordChangedDateTime>
+    <PasswordReset>false</PasswordReset>
+    <PhoneNumber>34123456789</PhoneNumber>
+    <Roles>
+      <RolesItem>%All</RolesItem>
+    </Roles>
+    <Salt>zbyjKwHYVSJVhXH+5SiAH94w58UzL0b3iDZWrAvxPcsZlWBAE0uCnZogE89tO/DFp5qj7hx0fK3F1tK/5PGirg==</Salt>
+    <PasswordHashAlgorithm>SHA512</PasswordHashAlgorithm>
+    <PasswordHashWorkFactor>10000</PasswordHashWorkFactor>
+    <Version>1</Version>
+  </Users>
+  <SQLRoleGrantOption>
+    <UserOrRole>developer</UserOrRole>
+    <RoleGranted>%All</RoleGranted>
+    <Grantable>0</Grantable>
+  </SQLRoleGrantOption>
+</UsersExport>

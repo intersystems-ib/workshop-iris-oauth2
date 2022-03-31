@@ -16,6 +16,11 @@ XData Setup [ XMLNamespace = INSTALLER ]
             <Arg Value="/opt/irisapp/install/ssl.xml"/>
         </Invoke>
     </Namespace>
+    <Namespace Name="%SYS" Create="no">
+        <Invoke Class="Security.Users" Method="Import" CheckStatus="true">
+            <Arg Value="/opt/irisapp/install/user-developer.xml"/>
+        </Invoke>
+    </Namespace>
 </Manifest>
 }
 
