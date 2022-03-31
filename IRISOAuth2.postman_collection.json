@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "24e1792e-8fe5-447e-b68c-b451dd6e7808",
+		"name": "IRIS OAuth2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ResServer. Access Protected Resources using Client Credentials",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "VrJFDombwiaShg_0VE7rU2fjy99AGZnc2wbVzb_pYWvC199mSnfHUeOwgwG01qsfAPJBMGqFNqy1KP1zXofCTA",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "2w4qTU8mtrIpFQXspTiTl3TMkaTSS7n9FCeUirj-JHo",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "my/scope",
+							"type": "string"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "SYS",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "superuser",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://webserver/authserver/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://webserver/resserver/protected-resources/",
+					"protocol": "https",
+					"host": [
+						"webserver"
+					],
+					"path": [
+						"resserver",
+						"protected-resources",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

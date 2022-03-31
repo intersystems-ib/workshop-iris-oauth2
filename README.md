@@ -180,5 +180,34 @@ Create an OAuth client definiton. This client definition represents the resource
 * The protected resource URL is: https://webserver/resserver/protected-resources/
 
 You should get something like that:
-<img src="img/oauth-client-webapp.gif" width="800px"/>
+<img src="img/oauth-client-webapp.gif" width="800px" />
 
+# (b) Client Credentials Example
+
+<img src="img/client-credentials.png" width="500px" />
+
+Now, we are going to access the protected resources through Postman using the client credentials grant type.
+
+## (b.1) AuthServer
+
+### Enable Client Credentials
+* In [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server*
+* Enable `Client credentials` as a supported grant type.
+* After that auth server will be able to use both authorization code and client credentials grant types.
+
+### Create a client definition
+* Again in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server > Client Descriptions*
+* Create a client description for our Postman client
+
+<img src="img/postman-client-description.png" width="500px" />
+
+* In the **Client Credentials** tab, copy `Client ID` and `Client Secret` values. You will these values in Postman.
+
+## (b.2) Test 
+
+### Postman client
+* Import [IRISOAuth2.postman_collection.json](./IRISOAuth2.postman_collection.json) in Postman.
+* In the *Authorization* tab of the request, copy the values of `Client ID` and `Client Secret`.
+* After that, get a new token and then access the protected resources:
+
+<img src="img/oauth-client-postman.gif" width="800px" />
