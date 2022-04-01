@@ -205,7 +205,7 @@ Now, we are going to access the protected resources through Postman using the cl
 
 ## (b.2) Test 
 
-### Postman client
+### Postman client
 * Import [IRISOAuth2.postman_collection.json](./IRISOAuth2.postman_collection.json) in Postman.
 * In the *Authorization* tab of the request, copy the values of `Client ID` and `Client Secret`.
 * After that, get a new token and then access the protected resources:
