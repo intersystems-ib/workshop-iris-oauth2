@@ -127,7 +127,7 @@ Have a look at the OAuth Server definition in *System Administration > Security 
   * `BeforeAuthenticate`, `AfterAuthenticate`
   * `DisplayLogin` - customize login page that will be presented to users when authenticating
   * `DisplayPermissions` - customize consent page that will presented to users when consenting scopes
-* [auth.server.Validate](src/auth/server/Validate.cls) also can customize methods like:
+* [auth.server.Validate](oauth-auth-server/src/auth/server/Validate.cls) also can customize methods like:
   * `ValidateUser` - this is actually how users are authenticated in the system. By default it authenticates based on users created on the InterSystems IRIS instance. However you can write any other behaviour you need.  
 
 After defining the server, a new `/oauth2` web application has been created.
