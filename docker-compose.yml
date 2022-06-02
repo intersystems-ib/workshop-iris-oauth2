@@ -8,6 +8,7 @@ services:
     build:
       context: oauth-client
     image: workshop-iris-oauth:client
+    command: --check-caps false
     container_name: client
     ports:
     - "9091:52773"
@@ -21,6 +22,7 @@ services:
     build:
       context: oauth-resource-server
     image: workshop-iris-oauth:resserver
+    command: --check-caps false
     container_name: resourceserver
     ports:
     - "9092:52773"
@@ -35,6 +37,7 @@ services:
       context: oauth-auth-server
       dockerfile: Dockerfile
     image: workshop-iris-oauth:authserver
+    command: --check-caps false
     container_name: authserver
     ports:
     - "9093:52773"
@@ -48,6 +51,7 @@ services:
       context: webserver
       dockerfile: Dockerfile
     image: workshop-iris-oauth:webserver
+    command: --check-caps false
     container_name: webserver
     init: true
     depends_on:
