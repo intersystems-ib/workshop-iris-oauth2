@@ -51,7 +51,6 @@ services:
       context: webserver
       dockerfile: Dockerfile
     image: workshop-iris-oauth:webserver
-    command: --check-caps false
     container_name: webserver
     init: true
     depends_on:
