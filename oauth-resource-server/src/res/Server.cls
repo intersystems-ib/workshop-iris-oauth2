@@ -57,7 +57,7 @@ ClassMethod ResServer() As %Status
     write "OAuth 2.0 access token used to authorize resource server (RFC 6749)<br>"
     write "Access token validated using introspection endpoint (RFC 7662)<br>"
     write "   scope='"_jsonObject.scope_"'<br>"
-    write "   user="_jsonObject.username_"'",!
+    write "   user='"_jsonObject.username_"'",!
     
     quit $$$OK
 }
