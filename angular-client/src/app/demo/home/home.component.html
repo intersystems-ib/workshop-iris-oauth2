@@ -1,0 +1,41 @@
+<div>
+  <p class="h5">Angular OAuth2 Demo</p>
+  <small>Welcome to home page!</small>
+</div>
+
+<!-- authenticated -->
+<div class="section" *ngIf="isAuthenticated; else noAuth">
+  
+  <small>User data:</small>
+  <pre>
+{{ userData | json }}
+  </pre>
+
+  <small>Access Token:</small>
+  <pre>
+{{ accessToken | json }}
+  </pre>
+
+  <small>ID Token:</small>
+  <pre>
+{{ idToken | json }}
+  </pre>
+
+  <a mat-raised-button matTooltip="Access Protected Resources" color="primary" routerLink="/demo/protected">
+    Protected Resources
+    <mat-icon>shield</mat-icon>
+  </a>
+
+</div>
+
+<!-- not authenticated -->
+<ng-template #noAuth>
+  <div>
+    <button mat-raised-button matTooltip="Login" color="primary" (click)="login()">
+      Login
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
+</ng-template>
+
+

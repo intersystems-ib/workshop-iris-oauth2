@@ -5,6 +5,10 @@
 			"path": "."
 		},
 		{
+			"name": "angular-client",
+			"path": "angular-client"
+		},
+		{
 			"name": "client",
 			"path": "oauth-client"
 		},

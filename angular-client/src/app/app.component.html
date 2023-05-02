@@ -1,0 +1,67 @@
+
+<mat-sidenav-container fullscreen>
+  
+  <!-- sidenav menu -->
+  <mat-sidenav #sidenav>
+    <mat-nav-list (click)="sidenav.close()">
+      
+      <a mat-list-item routerLink="/demo">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Home</span>
+      </a>
+
+      <a mat-list-item (click)="login()" *ngIf="!isAuthenticated">
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span matListItemTitle>Login</span>
+      </a>
+
+      <a mat-list-item routerLink="/demo/protected" *ngIf="isAuthenticated">
+        <mat-icon matListItemIcon>shield</mat-icon>
+        <span matListItemTitle>Protected Resources</span>
+      </a>
+
+      <a mat-list-item (click)="logout()" *ngIf="isAuthenticated">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle>Logout</span>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- main -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+
+      <!-- left aligned-->
+      <button class="menu-button" mat-icon-button (click)="sidenav.open('mouse')">
+        <mat-icon>menu</mat-icon>
+      </button>
+    
+      <span class="fill-space"></span>
+      <span>demo</span>
+    
+      <!-- right aligned -->
+      <span class="fill-space"></span>
+      <span style='margin-right:20px;'>
+      </span>
+    </mat-toolbar>
+    
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+    
+    <div class="footer">
+      <div>
+        <p align="center">
+          <span>
+            demo
+          </span>
+        </p>
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+silent:
+<iframe src="silent-renew.html" height="400" width="400"></iframe>
