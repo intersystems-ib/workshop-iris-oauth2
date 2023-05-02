@@ -7,11 +7,29 @@ Parameter OAUTH2SCOPES = "openid profile email my/scope";
 
 Parameter UseSession As Integer = 1;
 
+Parameter HandleCorsRequest As %Integer = 1;
+
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
 <Routes>
     <Route Method="GET" Url = "/" Call = "ResServer" />
 </Routes>
+}
+
+/// This is the CORS request handler. User should override this method.
+ClassMethod OnHandleCorsRequest(url As %String) As %Status
+{
+	set url = %request.GetCgiEnv("HTTP_REFERER")
+    set origin = $p(url,"/",1,3) // origin = "http(s)://origin.com:port"
+
+    // here you can check specific origins
+    // otherway, it will allow all origins (useful while developing only)
+
+	do %response.SetHeader("Access-Control-Allow-Credentials","true")
+	do %response.SetHeader("Access-Control-Allow-Methods","GET,POST,PUT,DELETE,OPTIONS")
+	do %response.SetHeader("Access-Control-Allow-Origin",origin)
+	do %response.SetHeader("Access-Control-Allow-Headers","Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control")
+	quit $$$OK
 }
 
 ClassMethod ResServer() As %Status
@@ -54,10 +72,13 @@ ClassMethod ResServer() As %Status
         quit $$$OK
     }
     
-    write "OAuth 2.0 access token used to authorize resource server (RFC 6749)<br>"
-    write "Access token validated using introspection endpoint (RFC 7662)<br>"
-    write "   scope='"_jsonObject.scope_"'<br>"
-    write "   user='"_jsonObject.username_"'",!
+    write { 
+        "message": "OAuth 2.0 access token used to authorize resource server (RFC 6749). Access token validated using introspection endpoint (RFC 7662)",
+        "tokenScope": (jsonObject.scope),
+        "tokenUsername": (jsonObject.username),
+        "irisUsername": ($username),
+        "irisRoles": ($roles)
+    }.%ToJSON()
     
     quit $$$OK
 }
