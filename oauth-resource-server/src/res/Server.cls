@@ -5,8 +5,6 @@ Parameter OAUTH2APPNAME = "resserver";
 
 Parameter OAUTH2SCOPES = "openid profile email my/scope";
 
-Parameter UseSession As Integer = 1;
-
 Parameter HandleCorsRequest As %Integer = 1;
 
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
@@ -14,6 +12,13 @@ XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 <Routes>
     <Route Method="GET" Url = "/" Call = "ResServer" />
 </Routes>
+}
+
+/// Common config
+ClassMethod OnPreDispatch(pUrl As %String, pMethod As %String, ByRef pContinue As %Boolean) As %Status
+{
+    set %response.ContentType = "application/json"
+    Quit $$$OK
 }
 
 /// This is the CORS request handler. User should override this method.

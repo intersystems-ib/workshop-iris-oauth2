@@ -20,6 +20,9 @@ XData Setup [ XMLNamespace = INSTALLER ]
         <Invoke Class="Security.Applications" Method="Import" CheckStatus="true">
             <Arg Value="/opt/irisapp/install/webapp-application.xml"/>
         </Invoke>
+        <Invoke Class="Security.Applications" Method="Import" CheckStatus="true">
+            <Arg Value="/opt/irisapp/install/webapp-angular.xml"/>
+        </Invoke>
     </Namespace>
 </Manifest>
 }

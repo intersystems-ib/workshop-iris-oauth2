@@ -1,4 +1,4 @@
-Using OAuth2 framework in InterSystems IRIS. Learn how to act as Client, Authentication Server or Resource Server.
+Using OAuth2 framework in InterSystems IRIS. Learn how to act as Client, Authentication Server or Resource Server in different scenarios.
 
 # Setup
 ## Modify your local hosts file 
@@ -85,11 +85,16 @@ There are some OIDC specific scopes:
 | profile   | Profile information like including name, family_name, given_name                      |
 | email     | email claim                                                                           |  
 
-# (a) Authorization Code Example
 
-<img src="img/authorization-code.png" width="500px"/>
+# Scenario: REST API
 
-## (a.1) AuthServer
+In this scenario, you will secure a REST API (protected resource) that will be accessed from a registered client (Postman).
+
+You will use **Client Credentials** OAuth grant type.
+
+<img src="img/client-credentials.png" width="500" />
+
+## Authorization Server
 You need to create an OAuth server definition in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp). It can be done using the management portal or using `OAuth2.*` classes.
 
 For convenience, you will use an [utility](oauth-auth-server/src/auth/server/Utils.cls) that is already prepared with some settings. 
@@ -101,16 +106,16 @@ iris session iris
 ```
 
 Create the OAuth server definition with the utility which uses `OAuth2.*` classes:
-```
+```objectscript
 zn "AUTHSERVER"
 do ##class(auth.server.Utils).CreateServerConfig()
 ```
 
-Have a look at the OAuth Server definition in *System Administration > Security > OAuth 2.0 > Server* and check:
+Have a look at the OAuth Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen) and check:
 
 ### Supported grant types
 * These are the grant types that your auth server will support.
-* There are different grant types suitable for different scenarios. In this case we are using *authorization code*.
+* There are different grant types suitable for different scenarios. For example, for a REST API you could use *client credentials*, and for web applications the *authorization code*.
 
 ### Scopes
 * A client can request one or more scopes. This information is displayed to the user in the consent screen.
@@ -133,26 +138,16 @@ Have a look at the OAuth Server definition in *System Administration > Security 
 After defining the server, a new `/oauth2` web application has been created.
 The OpenID URL for the server is available at: https://webserver/authserver/oauth2/.well-known/openid-configuration
 
-## (a.2) Client
-Now, you will create client definition in the [Client](https://webserver/client/csp/sys/UtilHome.csp) instance.
+## Resource Server
 
-Create a dynamic OAuth server definition. This will be a reference to the authentication server you created in the previous step:
-* Go to *System Administration > Security > OAuth 2.0 > Client > Client Configurations > Create Client Configuration*
-* Issuer endpoint: `https://webserver/authserver/oauth2`
-* SSL/TLS configuration: `ssl`
+### REST API
+* There is a REST API implemented in [res.Server](oauth-resource-server/src/res/Server.cls)
+* Check the source code. REST API will receive a token and it must validate that token.
+* A web application [/protected-resources](https://webserver/resserver/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Fprotected-resources) defines the access to the REST API.
+* The protected resource URL is: https://webserver/resserver/protected-resources/
 
-Create an OAuth client definition. This definition describes and registers a client that will use the authorization server: 
-* Application name: `client-app`
-* Client name: `client-name`
-* Client type: `Confidential`
-* SSL/TLS configuration: `ssl`
-* Client redirect URL:
-  * Use TLS: `yes`
-  * Hostname: `webserver`
-  * Prefix: `client`
-
-## (a.3) Resource Server
-Finally, you will create the resource server in the [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp) instance:
+### Secure REST API
+The REST API will be an OAuth resource server in the [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp) instance. 
 
 Create a dynamic OAuth server definition. This also is a reference to the authentication server created before:
 * Go to *System Administration > Security > OAuth 2.0 > Client > Client Configurations > Create Client Configuration*
@@ -161,53 +156,106 @@ Create a dynamic OAuth server definition. This also is a reference to the authen
 
 Create an OAuth client definiton. This client definition represents the resource server:
 * Application name: `resserver`
+* Client name: `resserver`
 * Client type: `Resource Server`
 * SSL/TLS configuration: `ssl`
 
-## (a.4) Test
+### Delegated authentication in the REST API
+* TODO
 
-### Client Application
-* In the [Client](https://webserver/client/csp/sys/UtilHome.csp) instance you have already a simple web app created that uses the `%OAuth2` classes.
-* Have a look at the code of [client.Application](oauth-client/src/client/Application.cls)
-* Test the application using https://webserver/client/application/
-  * Try accessing with `superuser`/`SYS` or `developer`/`test`. 
-  * Notice that these users are actually defined in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp) instance.
+### Client
+You have now to register the client that will be able to ask for tokens and access the resource server.
 
-### Resource Server
-* In the [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp) instance, you also have the resource server prepared.
-* Check [res.Server](oauth-resource-server/src/res/Server.cls) source code.
-* Resource server can be accessed only through the client application (otherwise it will return an error). 
-* The protected resource URL is: https://webserver/resserver/protected-resources/
+* In [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server > Client Descriptions*
+* Create a client description for our Postman client as follows.
+* In the **Client Credentials** tab, copy `Client ID` and `Client Secret` values. You will use these values in Postman.
+
+<img src="img/postman-client-description.png" width="500" />
+
+### Test
+
+In Postman, do the following:
+* Import [IRISOAuth2.postman_collection.json](./IRISOAuth2.postman_collection.json) in Postman.
+* Test the **Access Protected Resources using Client Credentials** request.
+* In the *Authorization* tab of the request, copy the values of `Client ID` and `Client Secret`.
+* After that, get a new token and then access the protected resources:
+
+<img src="img/oauth-client-postman.gif" width="800" />
+
+
+# Scenario: simple web page
+In this scenario you will secure a simple web page (in IRIS) that will allow different users to access protected resources. 
+
+You will use **Authorization Code** OAuth grant type.
+
+<img src="img/authorization-code.png" width="500"/>
+
+## Authorization Server
+We will use the same configuration as in the previous scenario.
+Have a look at the Authorization Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen).
+
+## Resource Server
+We will also use the same resource server configuration as in the previous scenario.
+
+## Client
+
+### Simple Web Page
+* There is a simple web page implemented in IRIS [Client](https://webserver/client/csp/sys/UtilHome.csp) instance.
+* Check the source code at [client.Application](oauth-client/src/client/SimpleWebPage.cls)
+* This simple web page handle user authorization, displays info about authorization and uses the access token to access protected resources from resource server.
+* This web application is controlled by the web application definition in [/application](https://webserver/client/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Fapplication)
+
+### Secure Simple Web Page
+You have to create client definition in the [Client](https://webserver/client/csp/sys/UtilHome.csp) instance to register the simple web application that will act as client.
+
+Create a dynamic OAuth server definition:
+* Go to *System Administration > Security > OAuth 2.0 > Client > Client Configurations > Create Client Configuration*
+* Issuer endpoint: `https://webserver/authserver/oauth2`
+* SSL/TLS configuration: `ssl`
+
+Create an OAuth client definition. This definition describes and registers a client that will use the authorization server: 
+* Application name: `simple-web-page`
+* Client name: `simple-web-page`
+* Client type: `Confidential`
+* SSL/TLS configuration: `ssl`
+* Client redirect URL:
+  * Use TLS: `yes`
+  * Hostname: `webserver`
+  * Prefix: `client`
+* Click on *Dynamic Registration and Save*.
+
+## Test
+* Access the simple web page in https://webserver/client/application/
+* Log-in using `superuser`/`SYS` or `developer`/`test`. 
+* Notice that these users are actually defined in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp) instance.
 
 You should get something like that:
 <img src="img/oauth-client-webapp.gif" width="800px" />
 
-# (b) Client Credentials Example
+# Scenario: Angular application
 
-<img src="img/client-credentials.png" width="500px" />
+In this scenario, you will secure an Angular application that will handle user authorization and then let them access protected resources.
 
-Now, we are going to access the protected resources through Postman using the client credentials grant type.
+You will use a **Authorization Code + Proof Key Code Exchange (PKCE)** OAuth grant type in this case.
 
-## (b.1) AuthServer
+<img src="img/authorization-code-pkce.png" width="500" />
 
-### Enable Client Credentials
-* In [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server*
-* Enable `Client credentials` as a supported grant type.
-* After that auth server will be able to use both authorization code and client credentials grant types.
+## Authorization Server
+We will use the same configuration as in the previous scenario.
+Have a look at the Authorization Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen).
 
-### Create a client definition
-* Again in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server > Client Descriptions*
-* Create a client description for our Postman client
+## Resource Server
+We will also use the same resource server configuration as in the previous scenario.
 
-<img src="img/postman-client-description.png" width="500px" />
+## Client
 
-* In the **Client Credentials** tab, copy `Client ID` and `Client Secret` values. You will these values in Postman.
+### Angular Application
 
-## (b.2) Test 
+### Secure Angular Application
 
-### Postman client
-* Import [IRISOAuth2.postman_collection.json](./IRISOAuth2.postman_collection.json) in Postman.
-* In the *Authorization* tab of the request, copy the values of `Client ID` and `Client Secret`.
-* After that, get a new token and then access the protected resources:
+do ##class(auth.server.Utils).CreateAngularAppClient()
 
-<img src="img/oauth-client-postman.gif" width="800px" />
+## Test
+
+http://localhost:8080/demo
+

@@ -62,3 +62,11 @@ services:
     - ./webserver:/webserver
     environment:
     - ISC_DATA_DIRECTORY=/webserver
+
+  angular-client:
+    build:
+      context: angular-client
+      dockerfile: Dockerfile
+    container_name: angular-client
+    ports:
+    - "8080:80"

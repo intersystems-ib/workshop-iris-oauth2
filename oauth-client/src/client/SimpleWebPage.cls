@@ -1,7 +1,7 @@
-Class client.Application Extends %CSP.REST
+Class client.SimpleWebPage Extends %CSP.REST
 {
 
-Parameter OAUTH2APPNAME = "client-app";
+Parameter OAUTH2APPNAME = "simple-web-page";
 
 Parameter OAUTH2CLIENTREDIRECTURI = "https://webserver/client/application/";
 

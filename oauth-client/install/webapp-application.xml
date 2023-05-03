@@ -7,7 +7,7 @@
     <CSPZENEnabled>true</CSPZENEnabled>
     <CSRFToken>false</CSRFToken>
     <DeepSeeEnabled>false</DeepSeeEnabled>
-    <DispatchClass>client.Application</DispatchClass>
+    <DispatchClass>client.SimpleWebPage</DispatchClass>
     <Enabled>true</Enabled>
     <HyperEvent>0</HyperEvent>
     <iKnowEnabled>false</iKnowEnabled>
