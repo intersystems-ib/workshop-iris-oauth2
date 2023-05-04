@@ -20,27 +20,38 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    
     /*
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated, userData, accessToken, idToken, configId }) => {
-      ;
+      this.isAuthenticated = isAuthenticated;
+      this.userData = userData;
+      this.accessToken = accessToken;
+      this.idToken = idToken;
     });
     */
-
+    
     this.oidcSecurityService.isAuthenticated$.subscribe(({ isAuthenticated }) => {
       this.isAuthenticated = isAuthenticated;
+
+      if (this.isAuthenticated) {
+
+        this.oidcSecurityService.userData$.subscribe(({ userData }) => {
+          this.userData = userData;
+        });
+    
+        this.oidcSecurityService.getAccessToken().subscribe((token) => {
+          this.accessToken = token;
+        });
+    
+        this.oidcSecurityService.getIdToken().subscribe((token) => {
+          this.idToken = token;
+        });
+
+      }
+
+
     });
 
-    this.oidcSecurityService.userData$.subscribe(({ userData }) => {
-      this.userData = userData;
-    });
-
-    this.oidcSecurityService.getAccessToken().subscribe((token) => {
-      this.accessToken = token;
-    });
-
-    this.oidcSecurityService.getIdToken().subscribe((token) => {
-      this.idToken = token;
-    });
   }
 
   login() {

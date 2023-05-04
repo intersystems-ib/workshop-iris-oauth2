@@ -16,7 +16,7 @@ ClassMethod CreateServerConfig()
     set endpoint.Prefix = "authserver"
     set server.IssuerEndpoint = endpoint
 
-    set server.SupportSession = 1
+    set server.SupportSession = 0
     set server.ReturnRefreshToken = "f"
     set server.AllowPublicClientRefresh = 1
     

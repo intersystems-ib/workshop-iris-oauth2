@@ -230,7 +230,7 @@ Create an OAuth client definition. This definition describes and registers a cli
 * Notice that these users are actually defined in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp) instance.
 
 You should get something like that:
-<img src="img/oauth-client-webapp.gif" width="800px" />
+<img src="img/oauth-client-simplewebpage.gif" width="800" />
 
 # Scenario: Angular application
 
@@ -250,12 +250,31 @@ We will also use the same resource server configuration as in the previous scena
 ## Client
 
 ### Angular Application
+* You will find the Angular application source code in `/angular-client` directory.
+* It uses the [angular-auth-oidc-client](https://github.com/damienbod/angular-auth-oidc-client) to handle OAuth authorization.
+* The application allows users to authorize, displays authorizaton info and also allows users to access protected resources using access token.
 
 ### Secure Angular Application
+* You need to register the client that represents the Angular application in the Authorization Server.
+* In this case, you will use a util that creates the client for you (because it needs an specific ClientId that is used in the angular app).
+* You can created client in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server > Client Descriptions*
 
+To create the client run the following:
+
+```
+docker exec -it authserver bash
+iris session iris
+```
+
+```objectscript
+zn "AUTHSERVER"
 do ##class(auth.server.Utils).CreateAngularAppClient()
+```
 
 ## Test
+* Access the Angular application in http://localhost:8080/demo
+* Log-in using `developer` / `test` or `superuser` / `SYS`
 
-http://localhost:8080/demo
+You shoul be able to get something like that:
 
+<img src="img/oauth-client-angularapp.gif" width="800" />
