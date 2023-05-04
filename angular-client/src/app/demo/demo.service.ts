@@ -11,11 +11,23 @@ export class DemoService {
     private http:HttpClient,
   ) { }
 
-  private urlBase = 'https://webserver/resserver/protected-resources';
+  private urlBase = 'https://webserver/resserver';
 
+  /**
+   * Retrieve protected resources from Resource Server (delegated authentication)
+   */
   getResource():  Observable<Object> {
     return this.http.get<Object>(
-      `${this.urlBase}/`
+      `${this.urlBase}/protected-resources/`
+    );
+  }
+
+  /**
+   * Retrieve protected resources from Resource Server (delegated authentication)
+   */
+  getResourceDelegated():  Observable<Object> {
+    return this.http.get<Object>(
+      `${this.urlBase}/protected-resources-delegated/`
     );
   }
 

@@ -4,7 +4,7 @@
     },
     "objectscript.conn": {
         "active": true,
-        "ns": "RESSERVER",
+        "ns": "%SYS",
         "host": "localhost",
         "port": 9092,
         "username": "superuser",

@@ -42,12 +42,13 @@ You will set up some examples using OAuth2 authorization framework and InterSyst
 In this examples, you will learn how InterSystems IRIS can act as different roles in the OAuth2 framework.
 
 After running containers, you should get access to:
-| Container  | Mng. Portal URL                                    | Notes                                                |
-| ---------  | -----------                                        | -----------                                          |
-| webserver  | https://webserver/csp/bin/Systems/Module.cxw       | HTTPS access to all IRIS instances                   |
-| authserver | https://webserver/authserver/csp/sys/UtilHome.csp  | IRIS instance that will act as Authorization Server  |
-| resserver  | https://webserver/resserver/csp/sys/UtilHome.csp   | IRIS instance that will act as Resource Server       |
-| client     | https://webserver/client/csp/sys/UtilHome.csp      | IRIS instance that will act as Client                |
+| Container       | URL                                                | Notes                                                |
+| ---------       | -----------                                        | -----------                                          |
+| webserver       | https://webserver/csp/bin/Systems/Module.cxw       | HTTPS access to all IRIS instances                   |
+| authserver      | https://webserver/authserver/csp/sys/UtilHome.csp  | IRIS instance that will act as Authorization Server  |
+| resserver       | https://webserver/resserver/csp/sys/UtilHome.csp   | IRIS instance that will act as Resource Server       |
+| client          | https://webserver/client/csp/sys/UtilHome.csp      | IRIS instance that will act as Client                |
+| angular-client  | http://localhost:8080/                             | Angular application that will act as Client          |
 
 You can login in InterSystems IRIS instances using `superuser`/`SYS`.
 
@@ -161,7 +162,10 @@ Create an OAuth client definiton. This client definition represents the resource
 * SSL/TLS configuration: `ssl`
 
 ### Delegated authentication in the REST API
-* TODO
+* You can use delegated authentication in IRIS to control exactly the username and roles of the code executing in your REST API.
+* The REST API is also accesible using [/protected-resources-delegated](https://webserver/resserver/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Fprotected-resources-delegated) to leverage delegated authentication.
+* It uses [ZAUTHENTICATE.mac](oauth-resource-server/src/ZAUTHENTICATE.mac) routine to validate OAuth token and create delegated IRIS users that will run your code.
+* You can find more information about that in the documentation.
 
 ### Client
 You have now to register the client that will be able to ask for tokens and access the resource server.

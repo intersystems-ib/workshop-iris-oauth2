@@ -14,7 +14,7 @@ import { environment } from '../../environments/environment';
             responseType: 'code',
             logLevel: LogLevel.Debug,
             renewTimeBeforeTokenExpiresInSeconds: 10,
-            secureRoutes: ['https://webserver/resserver/protected-resources/'],
+            secureRoutes: ['https://webserver/resserver/protected-resources/', 'https://webserver/resserver/protected-resources-delegated/'],
         
             /** token refresh */
             silentRenew: true,

@@ -9,6 +9,7 @@ import { DemoService } from '../demo.service';
 export class ProtectedComponent implements OnInit {
 
   resourceServerResponse!: any;
+  resourceServerResponseDelegated!: any;
 
   constructor(
     public demoService: DemoService
@@ -17,6 +18,10 @@ export class ProtectedComponent implements OnInit {
   ngOnInit() {
     this.demoService.getResource().subscribe((data) => {
       this.resourceServerResponse = data;
+    });
+
+    this.demoService.getResourceDelegated().subscribe((data) => {
+      this.resourceServerResponseDelegated = data;
     });
   }
 

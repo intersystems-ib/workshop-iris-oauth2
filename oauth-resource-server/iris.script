@@ -13,4 +13,22 @@
     // webgateway: access using server name
     do $System.CSP.SetConfig("CSPConfigName","resserver")
 
+
+    /** delegated authentication for REST APIs */
+    zn "%SYS"
+
+    // load ZAUTHENTICATE routine
+    do $system.OBJ.Load("/opt/irisapp/src/ZAUTHENTICATE.mac", "ck")
+
+    // enable delegated authentication
+    set sc = ##class(Security.System).Get("SYSTEM", .properties)
+    set properties("AutheEnabled")=10239
+    set sc = ##class(Security.System).Modify("SYSTEM", .properties)
+    
+    // enable delegated authentication in %Service_WebGateway
+    set service = ##class(Security.Services).%OpenId("%service_webgateway")
+    set service.AutheEnabled=8224
+    set service.AutheEnabledCapabilities=11232
+    do service.%Save()
+
     halt

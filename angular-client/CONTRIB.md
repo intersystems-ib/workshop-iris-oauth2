@@ -23,5 +23,6 @@ kill ^ISCLOG
 %SYS>set client."post_logout_redirect_uris" = $lb("http://localhost:4200/demo", "http://localhost:4200/home")
 %SYS>write client.%Save()
 
+ng build --configuration production
 
 
