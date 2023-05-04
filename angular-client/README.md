@@ -1,27 +1,54 @@
-# AngularAuthDemo
+# Angular Aut hDemo
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
 
-## Development server
+# Development Environment
+* Install Node
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+* Install local Angular
+```
+mkdir angular-15
+cd angular-15
+npm install npm@latest
+npm install @angular/cli@15.0.4
+```
 
-## Code scaffolding
+* Clone project
+```
+git clone https://github.com/intersystems-ib/workshop-iris-oauth2
+cd workshop-iris-oauth2/angular-client
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Install dependencies
+```
+npm install
+```
 
-## Build
+* Run development server
+```
+ng serve
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Check http://localhost:4200
 
-## Running unit tests
+# Distribution
+```
+ng build ---configuration production
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Util: angular cli commands used during development
 
-## Running end-to-end tests
+```
+ng new angular-auth-demo --routing=true --style=scss
+cd angular-auth-demo
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+ng add @angular/material
+npm install bootstrap
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ng generate module demo --routing
+ng generate component demo/home
+ng add angular-auth-oidc-client
+ng generate component demo/protected
+ng generate service demo/demo
+ng generate module shared
+```

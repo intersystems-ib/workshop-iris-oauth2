@@ -187,6 +187,22 @@ In Postman, do the following:
 
 <img src="img/oauth-client-postman.gif" width="800" />
 
+In case you want to have a look at what is happening in the authorization server while getting the token, you can active log messages:
+
+```
+docker exec -it authserver bash
+iris session iris
+```
+
+```objectscript
+zn "AUTHSERVER"
+
+set ^%ISCLOG=5
+zn "%SYS"
+do ##class(%OAuth2.Utils).DisplayLog("/app/authserver-debug.log")
+kill ^ISCLOG
+```
+
 
 # Scenario: simple web page
 In this scenario you will secure a simple web page (in IRIS) that will allow different users to access protected resources. 
