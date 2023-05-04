@@ -146,7 +146,7 @@ The OpenID URL for the server is available at: https://webserver/authserver/oaut
 * A web application [/protected-resources](https://webserver/resserver/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Fprotected-resources) defines the access to the REST API.
 * The protected resource URL is: https://webserver/resserver/protected-resources/
 
-### Secure REST API
+### Secure REST API
 The REST API will be an OAuth resource server in the [ResServer](https://webserver/resserver/csp/sys/UtilHome.csp) instance. 
 
 Create a dynamic OAuth server definition. This also is a reference to the authentication server created before:
