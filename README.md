@@ -194,7 +194,7 @@ You will use **Authorization Code** OAuth grant type.
 We will use the same configuration as in the previous scenario.
 Have a look at the Authorization Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen).
 
-## Resource Server
+## Resource Server
 We will also use the same resource server configuration as in the previous scenario.
 
 ## Client
@@ -244,17 +244,17 @@ You will use a **Authorization Code + Proof Key Code Exchange (PKCE)** OAuth gra
 We will use the same configuration as in the previous scenario.
 Have a look at the Authorization Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen).
 
-## Resource Server
+## Resource Server
 We will also use the same resource server configuration as in the previous scenario.
 
-## Client
+## Client
 
 ### Angular Application
 * You will find the Angular application source code in `/angular-client` directory.
 * It uses the [angular-auth-oidc-client](https://github.com/damienbod/angular-auth-oidc-client) to handle OAuth authorization.
 * The application allows users to authorize, displays authorizaton info and also allows users to access protected resources using access token.
 
-### Secure Angular Application
+### Secure Angular Application
 * You need to register the client that represents the Angular application in the Authorization Server.
 * In this case, you will use a util that creates the client for you (because it needs an specific ClientId that is used in the angular app).
 * You can created client in [AuthServer](https://webserver/authserver/csp/sys/UtilHome.csp), go to *System Administration > Security > OAuth 2.0 > Server > Client Descriptions*
@@ -271,7 +271,7 @@ zn "AUTHSERVER"
 do ##class(auth.server.Utils).CreateAngularAppClient()
 ```
 
-## Test
+## Test
 * Access the Angular application in http://localhost:8080/demo
 * Log-in using `developer` / `test` or `superuser` / `SYS`
 
