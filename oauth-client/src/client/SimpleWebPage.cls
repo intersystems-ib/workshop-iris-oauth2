@@ -132,6 +132,28 @@ ClassMethod ClientApp() As %Status
 				<pre>#(httpRequest.HttpResponse.Data.Read())#</pre> 
 			>
 
+			// access protected resources from resource server (delegated)
+			set httpRequest = ##class(%Net.HttpRequest).%New()
+			set httpRequest.Server = "webserver"
+			set httpRequest.Https = 1
+			set httpRequest.SSLConfiguration = "ssl"
+
+			set addTokenStatus = ##class(%SYS.OAuth2.AccessToken).AddAccessToken(httpRequest, "header", "ssl", ..#OAUTH2APPNAME)
+			if $$$ISERR(addTokenStatus) {
+				write "[Error] AddAccessToken: "_$system.Status.GetOneErrorText(addTokenStatus)
+				quit $$$OK
+			}
+
+			do httpRequest.Get("/resserver/protected-resources-delegated/")
+			set response = httpRequest.HttpResponse
+			&html<
+				<h1>Access to resource server (delegated)</h1>
+				Using token provided by authorization server to access https://webserver/resserver/protected-resources-delegated/ ...
+				<h4>Response</h4>
+				<pre>#(httpRequest.HttpResponse.StatusCode)#</pre>
+				<pre>#(httpRequest.HttpResponse.Data.Read())#</pre> 
+			>
+
 		}
     }
 

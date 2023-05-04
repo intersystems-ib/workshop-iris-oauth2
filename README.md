@@ -165,6 +165,7 @@ Create an OAuth client definiton. This client definition represents the resource
 * You can use delegated authentication in IRIS to control exactly the username and roles of the code executing in your REST API.
 * The REST API is also accesible using [/protected-resources-delegated](https://webserver/resserver/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Fprotected-resources-delegated) to leverage delegated authentication.
 * It uses [ZAUTHENTICATE.mac](oauth-resource-server/src/ZAUTHENTICATE.mac) routine to validate OAuth token and create delegated IRIS users that will run your code.
+* You will be able to check the differences while testing your REST API.
 * You can find more information about that in [REST Applications and OAuth 2.0](https://docs.intersystems.com/iris20231/csp/docbook/DocBook.UI.Page.cls?KEY=GREST_securing#GREST_oauth2)
 
 ### Client
