@@ -84,4 +84,45 @@ ClassMethod CreateAngularAppClient()
     set $namespace = ns
 }
 
+/// Generate TOTP QR
+/// do ##class(auth.server.Utils).GenerateTOTP("user", "/app/qrcode.png", "N4WMW25OA3JME2ZSZ7SVRYMCR373YKBV")
+/// - Use this method to generate a QR Code
+/// - Scan QR in Google Authenticator
+/// - Use TestTOTP method to test TOTP validation with different timestamps
+ClassMethod GenerateTOTP(account As %String = "user", qrFilename As %String = "/app/qrcode.png", secretBase32 As %String = "", issuer As %String = {"InterSystemsIRIS-"_##class(%SYS.System).GetNodeName(1)_"-"_##class(%SYS.System).GetInstanceName()}) As %Status
+{
+    set ret = $$$OK
+    try {
+        set secret = ""
+
+        if secretBase32 = "" {
+            set secret = $system.Encryption.GenCryptRand(20)
+            set secretBase32 = $system.Encryption.Base32Encode(secret)
+        } else {
+            set secret = ##class(%SYSTEM.Encryption).Base32Decode(secretBase32)
+        }
+        
+        set qrString = "otpauth://totp/"_issuer_":"_account_"?secret="_secretBase32_"&issuer="_issuer
+        $$$ThrowOnError(##class(%SYS.QRCode).GenerateFile(qrString, qrFilename))
+
+    } catch ex {
+        set ret = ex.AsStatus()
+    }
+    quit ret
+}
+
+/// Test TOTP validation with different timestamps
+/// do ##class(auth.server.Utils).TestTOTP("N4WMW25OA3JME2ZSZ7SVRYMCR373YKBV", "12345")
+ClassMethod TestTOTP(secretBase32 = "", totp As %String = "")
+{
+    set secret = ##class(%SYSTEM.Encryption).Base32Decode(secretBase32)
+	
+    // test TOTP validate with different timestamps
+    write "No TimeStamp",?40,##class(%SYSTEM.Encryption).TOTPValidate(totp, secret),!
+    for i=-60,-30,0,30,60 {
+		Set timestamp = $piece($horolog, ",", 1)_","_($piece($horolog, ",", 2)+i)
+		Write "Time ",i,"S ",$zdatetime(timestamp,3),?40,##class(%SYSTEM.Encryption).TOTPValidate(totp, secret, , timestamp, 30, 1, 6, 0),!
+	}
+}
+
 }
