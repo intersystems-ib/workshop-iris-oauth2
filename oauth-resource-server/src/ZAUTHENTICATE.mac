@@ -77,13 +77,17 @@ ZAUTHENTICATE(ServiceName, Namespace, Username, Password, Credentials, Propertie
  
 	quit sc
 }
-GetCredentials(ServiceName,Namespace,Username,Password,Credentials) Public {
+GetCredentials(ServiceName,Namespace,Username,Password,Credentials) Public {	
 	if ServiceName="%Service_WebGateway" {
-		// Supply user name and password for authentication via a subclass of %CSP.REST
-		set Username="OAuth2"
-		set Password=$c(1,2,3)
+		// avoid evaluating ZAUTHENTICATE logic on OPTIONS
+		// (you would found out that HTTP AUTHORIZATION header is empty, and ZAUTHENTICATE will fail)
+		if %request.Method '= "OPTIONS" {
+			// Supply user name and password for authentication via a subclass of %CSP.REST
+			set Username="OAuth2"
+			set Password=$c(1,2,3)
+			return $$$OK
+		}
 	}
-	quit $$$OK
 }
  
  
