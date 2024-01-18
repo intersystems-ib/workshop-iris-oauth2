@@ -15,10 +15,31 @@ Class auth.server.Validate Extends %OAuth2.Server.Validate
 ClassMethod ValidateUser(username As %String, password As %String, scope As %ArrayOfDataTypes, properties As %OAuth2.Server.Properties, Output sc As %Status) As %Boolean
 {
 	set $namespace = "%SYS"
+    
+    // default ValidateUser implementation
     set ret = ##super(username, password, scope, properties, .sc)
+
+    // add some custom properties
+    if ret = 1 {
+        do ..SetTokenProperty(.properties, "my-property", "value1234")
+        do ..SetTokenProperty(.properties, "other-property", [{"name:": "john"}, {"name": "doe"}].%ToJSON(), "object")
+    }
 
     set $namespace = "AUTHSERVER"
     quit ret
+}
+
+ClassMethod SetTokenProperty(Output properties As %OAuth2.Server.Properties, Name, Value, Type = "string")
+{
+    // add claims to all tokens
+    set tClaim = ##class(%OAuth2.Server.Claim).%New()
+    do properties.ResponseProperties.SetAt(Value,Name)
+    do properties.IntrospectionClaims.SetAt(tClaim,Name)
+    do properties.UserinfoClaims.SetAt(tClaim,Name)
+    do properties.JWTClaims.SetAt(tClaim,Name)
+    do properties.IDTokenClaims.SetAt(tClaim,Name)
+    do properties.SetClaimValue(Name,Value,Type)
+    Quit $$$OK
 }
 
 /// The ValidateClient method returns true (1), if the client_id and client_secret refer to a
