@@ -20,18 +20,19 @@ You can find your hosts file in:
 
 The certificate has been generated using:
 ```
+cd webserver
 openssl req -x509 -newkey rsa:4096 -keyout ssl-cert.key -out ssl-cert.pem -nodes -sha256 -days 999 -subj "/CN=webserver"
 ```
 
 # Run
 Build images:
 ```
-docker-compose build
+docker compose build
 ```
 
 Run containers:
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 
