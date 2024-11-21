@@ -1,4 +1,4 @@
-ARG IMAGE=containers.intersystems.com/intersystems/iris-community:2023.1.1.380.0
+ARG IMAGE=containers.intersystems.com/intersystems/iris-community:latest-cd
 FROM $IMAGE
 
 USER root
