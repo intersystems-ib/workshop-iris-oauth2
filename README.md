@@ -102,7 +102,7 @@ You need to create an OAuth server definition in [AuthServer](https://webserver/
 For convenience, you will use an [utility](oauth-auth-server/src/auth/server/Utils.cls) that is already prepared with some settings. 
 
 Open a terminal session:
-```
+```bash
 docker exec -it authserver bash
 iris session iris
 ```
@@ -265,6 +265,8 @@ You will use a **Authorization Code + Proof Key Code Exchange (PKCE)** OAuth gra
 ## Authorization Server
 We will use the same configuration as in the previous scenario.
 Have a look at the Authorization Server definition in [System Administration > Security > OAuth 2.0 > Server](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.OAuth2.Server.Configuration.zen).
+
+`/oauth2` endpoint in InterSystems IRIS has its own CORS settings. You should setup the allowed origins (e.g. the angular client application). In this case it is already setup for you. But you can have a look at it [here](https://webserver/authserver/csp/sys/sec/%25CSP.UI.Portal.Applications.Web.zen?PID=%2Foauth2#) in *Cross-Origin Settings* tab.
 
 ## Resource Server
 We will also use the same resource server configuration as in the previous scenario.

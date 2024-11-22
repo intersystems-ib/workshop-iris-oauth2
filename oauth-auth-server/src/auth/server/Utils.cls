@@ -38,7 +38,17 @@ ClassMethod CreateServerConfig()
     set server.CustomizationRoles = "%DB_IRISSYS,%Manager,%DB_%DEFAULT"
     set server.SSLConfiguration = "ssl"
 
+    // save auth server config
     write server.Save()
+
+    // setup /oauth2 CORS allow list
+    // allows access from client applications (e.g. angular, etc.) to https://webserver/authserver/oauth2/.well-known/openid-configuration
+    // this is required since latest changes in CORS handling in IRIS web apps
+    kill prop
+    write ##class(Security.Applications).Get("/oauth2",.prop)
+    set prop("CorsAllowlist") = $lts($lb("http://localhost:8080"))
+    set prop("CorsCredentialsAllowed") = 1
+    write ##class(Security.Applications).Modify("/oauth2",.prop)
 
     set $namespace = ns
 }
